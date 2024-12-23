@@ -10,4 +10,4 @@ there are 4 mains parameter
 
 usage example:
 
-http://localhost:5000/seeig?unamefind={target username}&accuname={your username}&accpwd={your password}&scrrollcount={how many scroll}
+http://{url}/seeig?unamefind={target username}&accuname={your username}&accpwd={your password}&scrrollcount={how many scroll}
