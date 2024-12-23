@@ -181,7 +181,8 @@ def go_see_x(user_name:str, your_account_username:str, your_account_password:str
 
 
 if __name__ == '__main__':
-    res = go_see_x('elonmusk','pioopipooi','ee=emce2',3)
+    # change '-' with you account details
+    res = go_see_x('elonmusk','-','-',3)
 
     print(res)
 
