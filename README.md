@@ -1,5 +1,6 @@
 # SocialMediaScraper
 
+## server.py is the main server file
 
 there are 4 mains parameter
 
