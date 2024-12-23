@@ -21,8 +21,6 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
 
     uName = user_name 
 
-    # acc_name = 'pioopipooi';
-    # acc_pwd = 'ee=emce2'
     
     
     acc_name = your_account_username;
@@ -37,20 +35,12 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
     engine.get(link)
 
 
-    # un_inp = engine.find_element_by_name('username')
-    # pw_inp = engine.find_element_by_name('password')
-
     WebDriverWait(engine, 20).until(EC.element_to_be_clickable((By.NAME, "username"))).send_keys(acc_name)
     WebDriverWait(engine, 20).until(EC.element_to_be_clickable((By.NAME, "password"))).send_keys(acc_pwd)
     WebDriverWait(engine, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
 
     WebDriverWait(engine, 60).until(EC.invisibility_of_element((By.XPATH, "//button[@type='submit']")))
 
-
-
-
-
-    # for uName in uNames:
     print("--------------------------------------------")
     print(f"Accessing {uName}")
     print("--------------------------------------------")
@@ -76,18 +66,13 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
         pass
 
 
-    # engine.implicitly_wait(30)
+
     WebDriverWait(engine,30).until(EC.presence_of_all_elements_located((By.CLASS_NAME,"_aagu")))
 
 
     for i in range(scroll_count):
         engine.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(3)
-    # engine.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    # time.sleep(3)
-    # engine.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    # time.sleep(3)
-    # engine.execute_script("window.scrollTo(0,document.body.scrollHeight);")
 
     posts = engine.find_elements(By.CLASS_NAME,"_aagu")
 
@@ -98,19 +83,6 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
         postlink = prnt.get_attribute("href")
         post_links.append(postlink)
 
-    # for i in range(len(post_links)):
-    #     # i_now = i*3
-    #     engine.get(post_links[i])
-    #     # engine.implicitly_wait(30)
-    #     time.sleep(4)
-
-    #     postCaption = engine.find_element(By.XPATH,"//h1[@dir='auto']").get_attribute("innerText")
-    #     # txt = txt.split('\n')
-
-    #     postDate = engine.find_element(By.XPATH,"//time[@title][@class='x1p4m5qa']").get_attribute('title')
-
-    #     # print(f"{i}\t{postDate}\t{post_links[i]}\t{postCaption}")
-    #     csvWriter.writerow([str(i+1),postDate,post_links[i],postCaption])
 
 
     global_i = 0;
@@ -129,7 +101,7 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
 
 
     for i in range(len(post_links)-5):
-        # engine.execute_script("window.open('about:blank')")
+
 
         engine.switch_to.window(engine.window_handles[(global_i%5)+1])
 
@@ -137,11 +109,10 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
 
 
         postCaption = engine.find_element(By.XPATH,"//h1[@dir='auto']").get_attribute("innerText")
-        # txt = txt.split('\n')
+
 
         postDate = engine.find_element(By.XPATH,"//time[@title][@class='x1p4m5qa']").get_attribute('title')
 
-        # print(f"{i}\t{postDate}\t{post_links[i]}\t{postCaption}")
         csvWriter.writerow([str(i+1),postDate,post_links[i],postCaption])
 
 
@@ -153,47 +124,6 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
     engine.quit()
     return csv_string.getvalue()
 
-
-
-            # for i in txt:
-
-            #     print(i)
-            #     if i == uName:
-            #         print('\n')
-
-            # print('\n\n\n')
-
-
-            # print('\n\n\n\n\n')
-
-
-        
-    #     WebDriverWait(engine, 30).until(EC.presence_of_element_located((By.XPATH, "//button[@class='_aagu]")))
-
-
-
-    #     perakun = BeautifulSoup(engine.page_source,'html.parser')
-
-
-    #     # ya = perakun.find_all('div',class_="_aagu")
-    #     with open('fsafe.html','w') as svhtml:
-    #         svhtml.write(str(perakun.prettify))
-
-
-
-
-        
-
-
-
-
-        # engine.implicitly_wait(20)
-
-
-
-
-
-    # un_inp.send
 
 
 
