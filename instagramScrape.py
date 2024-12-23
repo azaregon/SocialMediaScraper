@@ -198,7 +198,9 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
 
 
 if __name__ == '__main__':
-    res = go_see_ig('apple','pioopipooi','ee=emce2',3)
+    # change '-' with your account details
+    res = go_see_ig('apple','-','-',3)
+    
 
     print(res)
 
