@@ -8,6 +8,8 @@ there are 4 mains parameter
 - accpwd       :  your scraping account's password\
 - scrollcount  :  how many scrolling do you want to do in single page
 
+
+
 usage example:
 
 http://{url}/seeig?unamefind={target username}&accuname={your username}&accpwd={your password}&scrrollcount={how many scroll}
