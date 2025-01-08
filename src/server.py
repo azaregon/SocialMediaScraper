@@ -28,6 +28,27 @@ def see_the_ig():
 
     return result
 
+@app.route('/seeig2')
+def see_the_ig2():
+    uName_find = flask.request.args['unamefind']
+    account_username = flask.request.args['accuname']
+    account_pwd = flask.request.args['accpwd']
+
+    try:
+        postcnt = int(flask.request.args['postcnt'])
+    except:
+        postcnt = 3
+
+    print(uName_find,account_username,account_pwd,postcnt)
+
+    if uName_find == '' or account_username == '' or account_pwd == '':
+        return "some argument not filled,\n fill unamefind = account you want to scrape \n accuname = your account to scrape \n accpwd = your scraping account password"
+
+
+    result = instagramScrape.go_see_ig_Instaloader(uName_find,account_username,account_pwd,postcnt)
+
+    return result
+
 
 @app.route('/seetwt')
 def see_the_twt():
