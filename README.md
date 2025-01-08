@@ -8,6 +8,7 @@ there are 4 mains parameter
 - accuname     :  your account's login username for scraping other account\
 - accpwd       :  your scraping account's password\
 - scrollcount  :  how many scrolling do you want to do in single page
+- postcnt( /seeig2 ) : how many posts you want to retrieve, (0 for all post)
 
 
 
