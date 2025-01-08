@@ -39,6 +39,8 @@ def see_the_ig2():
     except:
         postcnt = 3
 
+    print(uName_find,account_username,account_pwd,postcnt)
+
     if uName_find == '' or account_username == '' or account_pwd == '':
         return "some argument not filled,\n fill unamefind = account you want to scrape \n accuname = your account to scrape \n accpwd = your scraping account password"
 
