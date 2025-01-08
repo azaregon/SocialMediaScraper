@@ -1,3 +1,4 @@
+import asgiref.sync
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,6 +9,8 @@ from selenium.webdriver.edge.options import Options
 import asyncio
 from twscrape import API, gather
 from twscrape.logger import set_log_level
+
+import asgiref
 
 import csv
 import io
@@ -189,6 +192,8 @@ def go_see_x(user_name:str, your_account_username:str, your_account_password:str
 
     # un_inp.send
 
+
+# NOTE: USE THIS FOR SCRAPING THE TWITTER
 async def go_see_x2(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
     api = API()  # or API("path-to.db") - default is `accounts.db`
 
@@ -201,7 +206,7 @@ async def go_see_x2(user_name:str, your_account_username:str, your_account_passw
     # get the user detail
     user_data = await api.user_by_login(user_name)
 
-    print(user_data.id)
+    # print(user_data.id)
 
     user_tweets = await gather(api.user_tweets(int(user_data.id),limit=how_many_post))
     # print(user_tweets)
@@ -224,6 +229,15 @@ async def go_see_x2(user_name:str, your_account_username:str, your_account_passw
     #     print(tweet.user.username, tweet.rawContent, tweet.date)  # tweet is `Tweet` object
 
     return csv_string.getvalue()
+
+
+# def go_see_x2(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
+# #     loop = asyncio.new_event_loop()
+# #     asyncio.set_event_loop(loop)
+# #     result = loop.run_until_complete(go_see_x2_worker(user_name, your_account_username, your_account_password, how_many_post))
+#     result = asgiref.sync.async_to_sync(go_see_x2_worker)(user_name, your_account_username, your_account_password, how_many_post)
+    
+#     return result
 
 
 

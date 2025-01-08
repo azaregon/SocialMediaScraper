@@ -2,10 +2,13 @@ import flask
 import instagramScrape
 import twitterScrape
 
+import asyncio
+
 
 
 
 app = flask.Flask(__name__)
+loop = asyncio.get_event_loop()
 
 
 
@@ -50,6 +53,9 @@ def see_the_ig2():
     return result
 
 
+
+
+
 @app.route('/seetwt')
 def see_the_twt():
     uName_find = flask.request.args['unamefind']
@@ -71,6 +77,8 @@ def see_the_twt():
 
 @app.route('/seetwt2')
 def see_the_twt2():
+
+    return "this function still trouble, use the actual function 'twitterScrape.go_see_x2' "
     uName_find = flask.request.args['unamefind']
     account_username = flask.request.args['accuname']
     account_pwd = flask.request.args['accpwd']
@@ -84,7 +92,11 @@ def see_the_twt2():
         return "some argument not filled,\n fill unamefind = account you want to scrape \n accuname = your account to scrape \n accpwd = your scraping account password"
 
 
+
+    # result = asyncio.run(twitterScrape.go_see_x2(uName_find,account_username,account_pwd,postcnt))
     result = twitterScrape.go_see_x2(uName_find,account_username,account_pwd,postcnt)
+    # result = loop.run_until_complete(asyncio.run(twitterScrape.go_see_x2(uName_find,account_username,account_pwd,postcnt)))
+    # result = twitterScrape.go
 
     return result
 
