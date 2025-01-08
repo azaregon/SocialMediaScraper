@@ -14,3 +14,8 @@ there are 4 mains parameter
 usage example:
 
 http://{url}/seeig?unamefind={target username}&accuname={your username}&accpwd={your password}&scrrollcount={how many scroll}
+
+
+usage seeig2:
+http://{url}/seeig?unamefind={target username}&accuname={your username}&accpwd={your password}&postcnt={how many post}
+postcnt= 0 -> for retrieve all postsin the account
