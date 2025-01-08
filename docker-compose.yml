@@ -1,0 +1,16 @@
+services:
+  chrome:
+    image: selenium/standalone-chrome
+    restart: unless-stopped
+    ports:
+    - 34444:4444
+  myapp:
+    build:
+      context: src
+      dockerfile: Dockerfile
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - ./src:/app
+    ports:
+      - 34445:5000
