@@ -5,6 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.edge.options import Options
 
+import instaloader
+
+
 import time
 import csv
 import io
@@ -123,6 +126,48 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
 
     engine.quit()
     return csv_string.getvalue()
+
+def go_see_ig_Instaloader(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
+    # how many post: 0 indicates all
+# rom_url("https://www.instagram.com/p/BjNLpA1AhXM/")
+    L = instaloader.Instaloader()
+    L.login(your_account_username,your_account_password)
+
+    # L.interactive_login(your_account_username)      # (ask password on terminal)
+    # L.load_session_from_file(your_account_username) # (load session created w/
+                               #  `instaloader -l USERNAME`)
+    csv_string = io.StringIO()
+    csvWriter = csv.writer(csv_string)
+
+    profile = instaloader.Profile.from_username(L.context,user_name)
+    
+
+    postonProfile = profile.get_posts()
+
+
+    # if len(postonProfile) < how_many_post or how_many_post == 0:
+    #     how_many_post = len(postonProfile)
+
+    i = 0;
+    for post in postonProfile:
+    # for i in range(how_many_post):
+        # post = postonProfile[i]
+
+        if i == how_many_post:
+            break;
+
+        postDate = post.date
+        postUrl= f"instagram.com/p/{post.shortcode}"
+        postCaption = post.caption 
+        csvWriter.writerow([str(i+1),postDate,postUrl,postCaption])
+
+
+        i+=1
+
+        # print("\n\n")
+
+    return csv_string.getvalue()
+
 
 
 
