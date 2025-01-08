@@ -69,6 +69,25 @@ def see_the_twt():
 
     return result
 
+@app.route('/seetwt2')
+def see_the_twt2():
+    uName_find = flask.request.args['unamefind']
+    account_username = flask.request.args['accuname']
+    account_pwd = flask.request.args['accpwd']
+
+    try:
+        postcnt = int(flask.request.args['postcnt'])
+    except:
+        postcnt = 10
+
+    if uName_find == '' or account_username == '' or account_pwd == '':
+        return "some argument not filled,\n fill unamefind = account you want to scrape \n accuname = your account to scrape \n accpwd = your scraping account password"
+
+
+    result = twitterScrape.go_see_x2(uName_find,account_username,account_pwd,postcnt)
+
+    return result
+
 
 
 
