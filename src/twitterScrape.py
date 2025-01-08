@@ -1,9 +1,20 @@
+import asgiref.sync
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.edge.options import Options
+
+import asyncio
+from twscrape import API, gather
+from twscrape.logger import set_log_level
+
+import asgiref
+
+import csv
+import io
+import datetime
 
 import time
 import csv
@@ -180,6 +191,53 @@ def go_see_x(user_name:str, your_account_username:str, your_account_password:str
 
 
     # un_inp.send
+
+
+# NOTE: USE THIS FOR SCRAPING THE TWITTER
+async def go_see_x2(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
+    api = API()  # or API("path-to.db") - default is `accounts.db`
+
+    # ADD ACCOUNTS (for CLI usage see BELOW)
+    # await api.pool.add_account("pioopipooi", "ee=emce2", "", "")
+    await api.pool.add_account(your_account_username, your_account_password, "", "")
+    # await api.pool.add_account("maxevers123", "2051Lb57", "max.evers123@hotmail.com", "2051Lb57")
+    await api.pool.login_all()
+
+    # get the user detail
+    user_data = await api.user_by_login(user_name)
+
+    # print(user_data.id)
+
+    user_tweets = await gather(api.user_tweets(int(user_data.id),limit=how_many_post))
+    # print(user_tweets)
+
+    csv_string = io.StringIO()
+    csvWriter = csv.writer(csv_string)
+
+    i = 0
+    for tweet in user_tweets:
+        if i == how_many_post:
+            break;
+
+        csvWriter.writerow([str(i+1),tweet.date.strftime("%Y-%m-%d %X"),tweet.url, tweet.rawContent])
+
+        i+=1
+
+
+    # NOTE 1: gather is a helper function to receive all data as list, FOR can be used as well:
+    # async for tweet in api.search("apple"):
+    #     print(tweet.user.username, tweet.rawContent, tweet.date)  # tweet is `Tweet` object
+
+    return csv_string.getvalue()
+
+
+# def go_see_x2(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
+# #     loop = asyncio.new_event_loop()
+# #     asyncio.set_event_loop(loop)
+# #     result = loop.run_until_complete(go_see_x2_worker(user_name, your_account_username, your_account_password, how_many_post))
+#     result = asgiref.sync.async_to_sync(go_see_x2_worker)(user_name, your_account_username, your_account_password, how_many_post)
+    
+#     return result
 
 
 
