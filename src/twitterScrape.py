@@ -280,7 +280,7 @@ def go_see_x3(user_name:str, your_account_username:str, your_account_password:st
 
 if __name__ == '__main__':
     # change '-' with you account details
-    res = asyncio.run(go_see_x2('elonmusk','pioopipooi','sakurah2',3))
+    res = asyncio.run(go_see_x2('elonmusk','-','-',3))
 
     print(res)
 
