@@ -29,12 +29,14 @@ def go_see_ig(user_name:str, your_account_username:str, your_account_password:st
     acc_name = your_account_username;
     acc_pwd = your_account_password;
 
-    edgeOpt = Options()
-    edgeOpt.add_experimental_option('detach',True)
+    # edgeOpt = Options()
+    # edgeOpt.add_experimental_option('detach',True)
 
-    engine = webdriver.Edge(options=edgeOpt)
+    # engine = webdriver.Edge(options=edgeOpt)
     
-    
+
+
+    engine = webdriver.Remote("http://chrome:4444/wd/hub", options=webdriver.ChromeOptions())
     engine.get(link)
 
 

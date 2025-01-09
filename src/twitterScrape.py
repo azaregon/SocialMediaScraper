@@ -10,6 +10,8 @@ import asyncio
 from twscrape import API, gather
 from twscrape.logger import set_log_level
 
+from twikit import Client
+
 import asgiref
 
 import csv
@@ -231,19 +233,54 @@ async def go_see_x2(user_name:str, your_account_username:str, your_account_passw
     return csv_string.getvalue()
 
 
-# def go_see_x2(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
-# #     loop = asyncio.new_event_loop()
-# #     asyncio.set_event_loop(loop)
-# #     result = loop.run_until_complete(go_see_x2_worker(user_name, your_account_username, your_account_password, how_many_post))
-#     result = asgiref.sync.async_to_sync(go_see_x2_worker)(user_name, your_account_username, your_account_password, how_many_post)
+async def go_see_x3_worker(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
+    client = Client(language='en-US')
+
+
+    try:
+        await client.login(auth_info_1=your_account_username,password=your_account_password)
+    except Exception as e:
+        return e
+
+    user_find = await client.get_user_by_screen_name(user_name)
+    print(user_find.created_at_datetime.strftime("%Y-%m-%d %X"))
+    user_find_twts =  await user_find.get_tweets('Tweets',count=how_many_post)
+
     
-#     return result
+    csv_string = io.StringIO()
+    csvWriter = csv.writer(csv_string)
+    
+    i = 0
+    for tweet in user_find_twts:
+
+        twt_txt = tweet.full_text
+        if twt_txt.startswith("RT") and tweet.retweeted_tweet:
+            twt_txt = twt_txt.replace("RT","[RETWEETED FROM: ]",1)
+
+        twt_link = f"https://twitter.com/{user_name}/status/{tweet.id}"
+        csvWriter.writerow([str(i+1),tweet.created_at_datetime.strftime("%Y-%m-%d %X"),twt_link, twt_txt])
+
+
+        i+=1
+
+
+
+    return csv_string.getvalue()
+
+
+def go_see_x3(user_name:str, your_account_username:str, your_account_password:str, how_many_post:int=10):
+#     loop = asyncio.new_event_loop()
+#     asyncio.set_event_loop(loop)
+#     result = loop.run_until_complete(go_see_x2_worker(user_name, your_account_username, your_account_password, how_many_post))
+    result = asgiref.sync.async_to_sync(go_see_x3_worker)(user_name, your_account_username, your_account_password, how_many_post)
+    
+    return result
 
 
 
 if __name__ == '__main__':
     # change '-' with you account details
-    res = go_see_x('elonmusk','-','-',3)
+    res = asyncio.run(go_see_x2('elonmusk','-','-',3))
 
     print(res)
 

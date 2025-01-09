@@ -1,3 +1,5 @@
 selenium
 bs4
 flask
+instaloader
+twikit
