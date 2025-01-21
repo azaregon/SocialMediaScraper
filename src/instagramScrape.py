@@ -176,7 +176,7 @@ def go_see_ig_Instaloader(user_name:str, your_account_username:str, your_account
 
 if __name__ == '__main__':
     # change '-' with your account details
-    res = go_see_ig('apple','-','-',3)
+    res = go_see_ig('apple','royyana_smile','SakuraH2',3)
     
 
     print(res)
